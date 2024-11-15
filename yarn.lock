@@ -1645,7 +1645,7 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 "better-endpoints@file:":
-  version "1.0.1"
+  version "1.0.2"
   resolved "file:"
   dependencies:
     better-endpoints "file:"

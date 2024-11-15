@@ -1,7 +1,10 @@
 {
-  "version": "1.0.1",
+  "name": "better-endpoints",
+  "version": "1.0.2",
   "license": "MIT",
-  "main": "dist/index.js",
+  "author": "devmathx",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
@@ -10,19 +13,23 @@
   "engines": {
     "node": ">=10"
   },
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build",
+    "build:cjs": "tsc --module CommonJS --outDir dist/cjs",
+    "build:esm": "tsc --module ESNext --outDir dist/esm",
+    "build": "npm run build:cjs && npm run build:esm",
     "test": "tsdx test",
     "lint": "tsdx lint",
-    "prepare": "tsdx build",
+    "prepare": "npm run build",
     "size": "size-limit",
-    "analyze": "size-limit --why"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
+    "analyze": "size-limit --why",
+    "verify": "npm publish --dry-run"
   },
   "prettier": {
     "printWidth": 80,
@@ -30,16 +37,13 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "better-endpoints",
-  "author": "devmathx",
-  "module": "dist/better-endpoints.esm.js",
   "size-limit": [
     {
-      "path": "dist/better-endpoints.cjs.production.min.js",
+      "path": "dist/cjs/index.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/better-endpoints.esm.js",
+      "path": "dist/esm/index.js",
       "limit": "10 KB"
     }
   ],
