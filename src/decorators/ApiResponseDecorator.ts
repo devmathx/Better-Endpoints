@@ -1,16 +1,18 @@
+import 'reflect-metadata';
 import { CustomApiError } from "../classes/CustomApiError";
 import Response from "../types/response";
 
 type Options = {
-  onSuccess: { status: 200 | 201 | 202 },
-}
+  onSuccess: { status: 200 | 201 | 202 };
+  onError: { message: string };
+};
 
 export function ApiResponse(options?: Options): MethodDecorator {
   return function (
-    _target: any,
-    _propertyKey: string | symbol,
-    descriptor: PropertyDescriptor
-  ) {
+    target: Object,
+    propertyKey: string | symbol,
+    descriptor: TypedPropertyDescriptor<any>
+  ): void | TypedPropertyDescriptor<any> {
     const originalMethod = descriptor.value;
 
     descriptor.value = async function (...args: any[]): Promise<Response> {
@@ -19,22 +21,22 @@ export function ApiResponse(options?: Options): MethodDecorator {
 
         return {
           success: true,
-          status: options ? options.onSuccess.status : 200,
+          status: options?.onSuccess.status ?? 200,
           message: data,
-        }
-      } catch (error) { 
+        };
+      } catch (error) {
         if (error instanceof CustomApiError) {
-          return { 
-            success: false, 
+          return {
+            success: false,
             status: error.code,
-            message: error.message 
+            message: error.message,
           };
         }
 
-        return { 
-          success: false, 
-          status: 500, 
-          message: "Erro interno no servidor" 
+        return {
+          success: false,
+          status: 500,
+          message: options?.onError.message ?? "Internal Server Error",
         };
       }
     };

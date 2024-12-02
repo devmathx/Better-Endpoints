@@ -1,24 +1,13 @@
 {
-  "include": ["src", "types"],
   "compilerOptions": {
-    "target": "ES6",
-    "module": "ESNext", 
-    "lib": ["dom", "esnext"],
-    "importHelpers": true,
+    "module": "commonjs",
+    "target": "es2020",
     "declaration": true,
-    "sourceMap": true,
-    "rootDir": "./src",
-    "outDir": "./dist",   
+    "outDir": "dist",
     "strict": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "moduleResolution": "node",
-    "jsx": "react",
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": false // Altere para verificação de tipos em dev
-  }
+    "skipLibCheck": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "tests"]
 }
