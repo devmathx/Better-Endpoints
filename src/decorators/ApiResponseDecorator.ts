@@ -1,10 +1,11 @@
 import 'reflect-metadata';
 import { CustomApiError } from "../classes/CustomApiError";
-import Response from "../types/response";
+import { Response, SuccessStatus } from "../types/response";
 
 type Options = {
-  onSuccess: { status: 200 | 201 | 202 };
-  onError: { message: string };
+  onSuccess?: { status?: SuccessStatus, message?: string };
+  onError?: { status?: number, message?: string };
+  enableDebug?: boolean,
 };
 
 export function ApiResponse(options?: Options): MethodDecorator {
@@ -21,22 +22,27 @@ export function ApiResponse(options?: Options): MethodDecorator {
 
         return {
           success: true,
-          status: options?.onSuccess.status ?? 200,
-          message: data,
+          status: options?.onSuccess?.status ?? 200,
+          message: options?.onSuccess?.message ?? data,
         };
       } catch (error) {
         if (error instanceof CustomApiError) {
           return {
             success: false,
-            status: error.code,
-            message: error.message,
+            status: options?.onError?.status ?? error.code,
+            message: options?.onError?.message ?? error.message,
           };
+        }
+
+        if (options?.enableDebug) {
+          console.log("ApiResponse Decorator catch:");
+          console.log(error);
         }
 
         return {
           success: false,
-          status: 500,
-          message: options?.onError.message ?? "Internal Server Error",
+          status: options?.onError?.status ?? 500,
+          message: options?.onError?.message ?? "Internal Server Error",
         };
       }
     };

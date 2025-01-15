@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.2.0] - 2025-1-15
+### Added
+- _Debug_ mode, enabled through the `enableDebug` property in `options`.
+
+### Changed
+- More customizable `options` parameter.
+- Fixed README.
+
+
+
 ## [1.1.0] - 2024-12-1
 ### Added
 - Decorator `ApiResponse` com suporte a mensagem padrão de erro.
