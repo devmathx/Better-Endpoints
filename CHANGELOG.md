@@ -1,6 +1,17 @@
 # Changelog
 
-## [1.2.0] - 2025-1-15
+## [1.3.0] - 2025-02-05
+### Added
+- Functions `createSuccessResponse` and `createErrorResponse` for manual response handling.
+- Type `ResponseDto` exported for access to the response structure.
+- New section in documentation on managing manual responses.
+
+### Changed
+- Fixed README.
+
+
+
+## [1.2.0] - 2025-01-15
 ### Added
 - _Debug_ mode, enabled through the `enableDebug` property in `options`.
 

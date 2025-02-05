@@ -1,0 +1,1 @@
+export type SuccessStatus = 200 | 201 | 202;

@@ -1,12 +1,7 @@
 import 'reflect-metadata';
 import { CustomApiError } from "../classes/CustomApiError";
-import { Response, SuccessStatus } from "../types/response";
-
-type Options = {
-  onSuccess?: { status?: SuccessStatus, message?: string };
-  onError?: { status?: number, message?: string };
-  enableDebug?: boolean,
-};
+import { Options } from '../types/Options';
+import { ResponseDto } from '../types/ResponseDto';
 
 export function ApiResponse(options?: Options): MethodDecorator {
   return function (
@@ -16,7 +11,7 @@ export function ApiResponse(options?: Options): MethodDecorator {
   ): void | TypedPropertyDescriptor<any> {
     const originalMethod = descriptor.value;
 
-    descriptor.value = async function (...args: any[]): Promise<Response> {
+    descriptor.value = async function (...args: any[]): Promise<ResponseDto> {
       try {
         const data = await originalMethod.apply(this, args);
 

@@ -1,6 +1,6 @@
-export type SuccessStatus = 200 | 201 | 202;
+import { SuccessStatus } from "./SuccessStatus";
 
-export type Response<T = any> = {
+export type ResponseDto<T = any> = {
   success: true,
   message: T,
   status: SuccessStatus,
@@ -8,5 +8,4 @@ export type Response<T = any> = {
   success: false,
   message: string,
   status: number,
-  errors?: string[],
-}
+};
