@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.4.0] - 2025-05-25
+### Added
+- Code Documentation.
+- New HTTP errors.
+
+### Changed
+- Fixed README.
+- _Debug_ mode, new log of final response object.
+
 ## [1.3.0] - 2025-02-05
 ### Added
 - Functions `createSuccessResponse` and `createErrorResponse` for manual response handling.

@@ -1,4 +1,4 @@
-  # _Better Endpoints_
+# _Better Endpoints_
 
 A TypeScript library to simplify API response handling and manage custom HTTP errors. It provides an `ApiResponse` decorator to format success and error responses consistently, along with specific error classes for each HTTP status code.
 
@@ -40,6 +40,7 @@ When the `getData` method is successfully executed, it will return an object in 
 
 In case of an error, `ApiResponse` captures the error and returns a standardized response.
 
+---
 
 ### 2. Handling HTTP Errors
 The library provides specific error classes for HTTP statuses, allowing you to throw errors with predefined status codes and messages. These errors are automatically captured by the `ApiResponse` decorator.
@@ -76,23 +77,34 @@ Error example:
 }
 ```
 
+---
 
 ### 3. Available Errors
 The library includes the following error classes, which can be used to represent specific HTTP errors:
 
-- `Error400` - Bad Request
-- `Error401` - Unauthorized
-- `Error403` - Forbidden
-- `Error404` - Not Found
-- `Error409` - Conflict
-- `Error429` - Too Many Requests
-- `Error500` - Internal Server Error
-- `Error502` - Bad Gateway
-- `Error503` - Service Unavailable
-- `Error504` - Gateway Timeout
+| Class | Code | Name | Description |
+| --- | --- | --- | --- |
+| `Error400` | 400 | Bad Request | The request is invalid or malformed.
+| `Error401` | 401 | Unauthorized | Authentication is required or has failed.
+| `Error403` | 403 | Forbidden | The client does not have permission to access the resource.
+| `Error404` | 404 | Not Found | The requested resource could not be found.
+| `Error408` | 408 | Request Timeout | The server timed out waiting for the request.
+| `Error409` | 409 | Conflict | The request conflicts with the current state of the resource.
+| `Error410` | 410 | Gone | The resource requested is no longer available.
+| `Error415` | 415 | Unsupported Media Type | The media type of the request is not supported by the server.
+| `Error422` | 422 | Unprocessable Entity | The server understands the request but cannot process it.
+| `Error426` | 426 | Upgrade Required | The client must upgrade to a different protocol.
+| `Error429` | 429 | Too Many Requests | The user has sent too many requests in a given time.
+| `Error451` | 451 | Unavailable For Legal Reasons | The resource is unavailable due to legal restrictions.
+| `Error500` | 500 | Internal Server Error | A generic error occurred on the server.
+| `Error502` | 502 | Bad Gateway | The server received an invalid response from the upstream server.
+| `Error503` | 503 | Service Unavailable | The server is temporarily unavailable or overloaded.
+| `Error504` | 504 | Gateway Timeout | The upstream server failed to send a request in time.
+| `Error507` | 507 | Insufficient Storage | The server is unable to store the representation needed to complete the request.
 
+---
 
-### 5. Customizing `options`
+### 4. Customizing `options`
 The `options` parameter for the `ApiResponse` decorator allows you to customize both the success and error responses, including HTTP status codes and messages. You can adjust the `onSuccess` and `onError` properties to define more specific behavior. 
 
 ```typescript
@@ -115,9 +127,12 @@ In this example:
 
 These customizations take priority over any default error messages that would normally be captured by the decorator.
 
+---
 
-### 4. Debug Mode
-The `ApiResponse` decorator supports an optional debug mode that can be enabled by setting the `enableDebug` property in the `options` parameter. When enabled, any errors caught by the decorator will be logged to the console for easier debugging.
+### 5. Debug Mode
+The `ApiResponse` decorator supports an optional debug mode that can be enabled by setting the `enableDebug` property in the `options` parameter. When enabled, the decorator will log:
+- Any **errors** caught during the method execution.
+- The **final response object** that will be returned, whether it's a success or an error.
 
 ```typescript
 import { ApiResponse } from 'better-endpoints';
@@ -130,11 +145,12 @@ class ExampleController {
 }
 ```
 
+---
 
-### 6. Manual Response Handling ![NEW](https://img.shields.io/badge/-NEW-green)
+### 6. Manual Response Handling
 In some cases, the `@ApiResponse` decorator might not fit all use cases. To provide more flexibility, _`better-endpoints`_ allows you to manually create responses that follow the same standardized format.
 
-#### ResponseDto Type
+### 6.1. ResponseDto Type
 All responses, whether handled by the decorator or manually, follow the `ResponseDto` type:
 
 ```typescript
@@ -153,7 +169,7 @@ export type ResponseDto<T = any> = {
 
 This ensures consistency across all responses in your API.
 
-#### Creating Success Responses
+### 6.2. Creating Success Responses
 To manually generate a success response, use the `createSuccessResponse` function:
 
 ```typescript
@@ -179,7 +195,7 @@ You can also specify a different status code:
 const response = createSuccessResponse("Created successfully", 201);
 ```
 
-#### Creating Error Responses
+### 6.3. Creating Error Responses
 To generate an error response, use `createErrorResponse`:
 
 ```typescript
@@ -199,7 +215,7 @@ Output:
 }
 ```
 
-#### Direct Response Objects vs Helper Functions
+### 6.4. Direct Response Objects vs Helper Functions
 Instead of using helper functions, you can also return the response object directly:
 
 ```typescript
@@ -220,13 +236,13 @@ const errorResponse: ResponseDto = {
 
 However, to simplify response creation and ensure consistency, use the built-in helper functions.
 
-#### When to Use Manual Responses
+### 6.5. When to Use Manual Responses
 Manual responses should be used when:
 - The `@ApiResponse` decorator does not fit a specific scenario.
 - You need to handle responses outside of a controller method.
 - You want to return formatted responses from middleware or services.
 
-#### Example
+### 6.6. Example
 ```typescript
 import { createErrorResponse, createSuccessResponse, ResponseDto } from 'better-endpoints';
 
@@ -272,6 +288,8 @@ class ExampleController {
   }
 }
 ```
+
+---
 
 ### Re-throwing errors:
 ```typescript
